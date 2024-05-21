@@ -22,6 +22,22 @@ import { ProductsClientService } from './products-client/products-client.service
 import { ProductsService } from './products/products.service';
 import { TablesService } from './tables/tables.service';
 import { ManagmentService } from './managment/managment.service';
+import { CajasModule } from './cajas/cajas.module';
+import { CajasService } from './cajas/cajas.service';
+import { CajasController } from './cajas/cajas.controller';
+import { RequestsModule } from './requests/requests.module';
+import { TasksModule } from './tasks/tasks.module';
+import { ReportsModule } from './reports/reports.module';
+import { ProvidersModule } from './providers/providers.module';
+import { InventariosModule } from './inventarios/inventarios.module';
+import { TasksService } from './tasks/tasks.service';
+import { TasksController } from './tasks/tasks.controller';
+import { RequestsController } from './requests/requests.controller';
+import { ReportsController } from './reports/reports.controller';
+import { ProvidersController } from './providers/providers.controller';
+import { ProvidersService } from './providers/providers.service';
+import { RequestsService } from './requests/requests.service';
+import { ReportsService } from './reports/reports.service';
 
 @Module({
   imports: [
@@ -43,6 +59,12 @@ import { ManagmentService } from './managment/managment.service';
     ProductsClientModule,
     ProductsModule,
     AssistantsModule,
+    CajasModule,
+    RequestsModule,
+    TasksModule,
+    ReportsModule,
+    ProvidersModule,
+    InventariosModule,
   ],
   controllers: [
     AssistantsController,
@@ -51,6 +73,11 @@ import { ManagmentService } from './managment/managment.service';
     ProductsClientController,
     ProductsController,
     TablesController,
+    CajasController,
+    TasksController,
+    RequestsController,
+    ReportsController,
+    ProvidersController
   ],
   providers: [
     AdminService,
@@ -60,7 +87,12 @@ import { ManagmentService } from './managment/managment.service';
     ProductsService,
     ManagmentService,
     TablesService,
+    CajasService,
+    TasksService,
+    ProvidersService,
+    RequestsService,
+    ReportsService,
   ],
 })
 
-export class AppModule {}
+export class AppModule { }
