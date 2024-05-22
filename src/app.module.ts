@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { EmployeesModule } from './employees/employees.module';
 import { TablesModule } from './tables/tables.module';
 import { AdminModule } from './admin/admin.module';
@@ -38,9 +38,13 @@ import { ProvidersController } from './providers/providers.controller';
 import { ProvidersService } from './providers/providers.service';
 import { RequestsService } from './requests/requests.service';
 import { ReportsService } from './reports/reports.service';
+import { CacheModule } from '@nestjs/cache-manager';
+import { APP_GUARD } from '@nestjs/core';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
+    PrismaModule,
     ConfigModule.forRoot({
       envFilePath: ['.env.development', '.env.production'],
       load: [config],
@@ -52,6 +56,9 @@ import { ReportsService } from './reports/reports.service';
         limit: 12,
       },
     ]),
+    CacheModule.register({
+      isGlobal: true,
+    }),
     EmployeesModule,
     TablesModule,
     AdminModule,
@@ -77,7 +84,7 @@ import { ReportsService } from './reports/reports.service';
     TasksController,
     RequestsController,
     ReportsController,
-    ProvidersController
+    ProvidersController,
   ],
   providers: [
     AdminService,
@@ -92,7 +99,10 @@ import { ReportsService } from './reports/reports.service';
     ProvidersService,
     RequestsService,
     ReportsService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
-
-export class AppModule { }
+export class AppModule {}
